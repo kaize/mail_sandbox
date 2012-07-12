@@ -1,3 +1,3 @@
 #!/usr/bin/env ruby
 
-MailSandbox::Server.start
+MailSandbox::Server.run
