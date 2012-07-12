@@ -1,5 +1,6 @@
+require "eventmachine"
 module MailSandbox
-  class Server
+  class Server < EventMachine::Protocols::SmtpServer
 
     def run
       sleep 10
