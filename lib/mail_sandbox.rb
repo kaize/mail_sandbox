@@ -1,5 +1,5 @@
 require "mail_sandbox/version"
 
 module MailSandbox
-  # Your code goes here...
+  autoload :Server, 'mail_sandbox/server'
 end
