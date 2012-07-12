@@ -23,15 +23,18 @@ class ServerTest < MiniTest::Unit::TestCase
   end
 
   def test_server_helo
-    ehlo = ''
+    bye, helo = nil
     Socket.tcp('127.0.0.1', 2525) do |socket|
-      socket.print "HELO\r\n"
-      ehlo = socket.readline
+      helo = socket.readline
+      socket.print "EHLO localhost.localdomain\r\n"
+      socket.readpartial(65536)
       socket.print "QUIT\r\n"
+      bye = socket.readline
       socket.close_write
       socket.close_read
     end
-    assert_equal ehlo, "EHLO"
+    assert_match /^220 .*/, helo
+    assert_match /^221 .*/, bye
   end
 
 
