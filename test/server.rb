@@ -8,6 +8,8 @@ class ServerTest < MiniTest::Unit::TestCase
           EventMachine::start_server '127.0.0.1', 2525, MailSandbox::Server
       }
     end
+    #wait run server
+    sleep 0.2
     Process.detach(@pid)
   end
 
@@ -21,7 +23,6 @@ class ServerTest < MiniTest::Unit::TestCase
   end
 
   def test_server_helo
-    sleep 0.2
     ehlo = ''
     Socket.tcp('127.0.0.1', 2525) do |socket|
       socket.print "HELO\r\n"
