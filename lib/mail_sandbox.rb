@@ -7,8 +7,6 @@ module MailSandbox
   autoload :Observer, 'mail_sandbox/observer'
   autoload :Subscribe, 'mail_sandbox/subscribe'
 
-  extend Forwardable
-
   def self.subscribe(observer)
     Subscribe.subscribe observer
   end
