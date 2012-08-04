@@ -4,6 +4,7 @@ require "eventmachine"
 module MailSandbox
   autoload :Server, 'mail_sandbox/server'
   autoload :Message, 'mail_sandbox/message'
+  autoload :Observer, 'mail_sandbox/observer'
   autoload :Subscribe, 'mail_sandbox/subscribe'
 
   extend Forwardable
