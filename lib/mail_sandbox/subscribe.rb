@@ -19,6 +19,7 @@ module MailSandbox
             end
           end
 
+          thread.abort_on_exception = true
           #thread.run
         end
       end

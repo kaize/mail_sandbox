@@ -10,12 +10,17 @@ module MailSandbox
     end
 
     def to_json
-      json = {
+      to_a.to_json
+    end
+
+
+    def to_a
+      {
         :recipient => recipient,
         :sender => sender,
         :completed_at => completed_at,
         :data => data.join("\r\n"),
-      }.to_json
+      }
     end
 
   end

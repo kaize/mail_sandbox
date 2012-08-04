@@ -2,7 +2,7 @@
 require 'mail_sandbox'
 require "eventmachine"
 
-MailSandbox.subscribe MailSandbox::Observer::Http.new('http://localhost:8080/api/mails')
+MailSandbox.subscribe MailSandbox::Observer::Http.new('http://192.168.30.45:8080/api/mail_messages')
 
 EventMachine::run {
   EventMachine::start_server '127.0.0.1', 2525, MailSandbox::Server
