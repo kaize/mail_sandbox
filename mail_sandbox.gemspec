@@ -2,8 +2,8 @@
 require File.expand_path('../lib/mail_sandbox/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Rozhnov Alexandr"]
-  gem.email         = ["nox73@ya.ru"]
+  gem.authors       = ["Kaize"]
+  gem.email         = [""]
   gem.description   = %q{Mail Sandbox}
   gem.summary       = %q{Mail Sandbox}
   gem.homepage      = ""
