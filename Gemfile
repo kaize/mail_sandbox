@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'eventmachine'
+gem 'em-http-request', :require => false
 
 group :test do
   gem 'minitest'

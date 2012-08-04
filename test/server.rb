@@ -98,5 +98,16 @@ MESSAGE_END
 
   end
 
+  def test_http_request
+    observer = MailSandbox::Observer::Http.new('http://localhost:8080/api/mails')
+    MailSandbox.subscribe observer
+
+    Net::SMTP.start('localhost', 2525) do |smtp|
+      smtp.send_message @message, 'me@fromdomain.com', 'test@todomain.com'
+    end
+
+    sleep 1
+  end
+
 
 end
