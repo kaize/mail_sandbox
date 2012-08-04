@@ -5,6 +5,7 @@ gemspec
 
 gem 'eventmachine'
 gem 'em-http-request', :require => false
+gem 'json', :require => false
 
 group :test do
   gem 'minitest'
