@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "mail_sandbox"
   gem.require_paths = ["lib"]
   gem.version       = MailSandbox::VERSION
+
+  gem.add_dependency(%q<eventmachine>)
+  gem.add_dependency(%q<em-http-request>)
 end

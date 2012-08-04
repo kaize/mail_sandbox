@@ -19,7 +19,7 @@ module MailSandbox
             end
           end
 
-          thread.run
+          #thread.run
         end
       end
 
