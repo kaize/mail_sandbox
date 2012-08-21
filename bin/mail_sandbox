@@ -1,27 +1,4 @@
 #!/usr/bin/env ruby
 require 'mail_sandbox'
-require "eventmachine"
-require 'optparse'
-require 'fileutils'
 
-config = MailSandbox::Config.new
-
-OptionParser.new do |opts|
-
-  opts.on("-c", "--config-file FILE", "Config file") do |f|
-    config.config_file = f
-  end
-
-end.parse!
-
-config.load_from_yml_file if config.config_file
-
-if config.http_observe?
-  MailSandbox.subscribe MailSandbox::Observer::Http.new(config.http_observe_url)
-end
-
-EventMachine::run {
-  EventMachine::start_server config.listen, config.port, MailSandbox::Server
-}
-
-
+MailSandbox::Runner.new.option_parse.start

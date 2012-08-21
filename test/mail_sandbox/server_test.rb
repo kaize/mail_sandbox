@@ -5,9 +5,7 @@ class ServerTest < MiniTest::Unit::TestCase
   def setup
 
     @server = Thread.new do
-      EventMachine::run {
-          EventMachine::start_server '127.0.0.1', 2525, MailSandbox::Server
-      }
+      MailSandbox::Runner.new.start
     end
     @server.abort_on_exception = true
     @server.run
@@ -24,12 +22,12 @@ MESSAGE_END
 
 
     #wait run server
-    sleep 0.2
+    sleep 0.5
   end
 
   def teardown
     Thread.kill @server
-    sleep 0.2
+    sleep 0.5
   end
 
   def test_server_run
@@ -107,6 +105,29 @@ MESSAGE_END
     end
 
     sleep 1
+  end
+
+  def test_auth
+    user = 'app_user'
+    password = 'KnesSGaF9TQ9wOOdXd2m'
+
+    observer = MyObserver.new
+    MailSandbox.subscribe observer
+
+    smtp = Net::SMTP.new('localhost', 2525)
+    #smtp.set_debug_output $stdout
+
+    smtp.start do |smtp|
+      smtp.auth_plain(user, password)
+      smtp.send_message @message, 'me@fromdomain.com', 'test@todomain.com'
+    end
+
+    sleep 1
+
+    assert observer.message
+    assert_equal user, observer.message.user
+    assert_equal password, observer.message.password
+
   end
 
 

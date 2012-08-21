@@ -3,7 +3,10 @@ require 'json'
 module MailSandbox
   class Message
 
-    attr_accessor :data, :recipient, :sender, :completed_at
+    attr_accessor :data, :recipient, :sender, :completed_at,
+        :user,
+        :password
+
 
     def initialize
       @data = []

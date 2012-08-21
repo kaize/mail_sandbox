@@ -7,6 +7,7 @@ module MailSandbox
   autoload :Observer, 'mail_sandbox/observer'
   autoload :Subscribe, 'mail_sandbox/subscribe'
   autoload :Config, 'mail_sandbox/config'
+  autoload :Runner, 'mail_sandbox/runner'
 
   def self.subscribe(observer)
     Subscribe.subscribe observer

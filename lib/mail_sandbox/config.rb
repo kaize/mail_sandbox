@@ -4,7 +4,10 @@ module MailSandbox
     def initialize
       @config = {
           :listen => '127.0.0.1',
-          :port => 2525
+          :port => 2525,
+          :server_params => {
+            :auth => true
+          }
       }
     end
 
