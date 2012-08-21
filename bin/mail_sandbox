@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
 require 'mail_sandbox'
 
-MailSandbox::Runner.new.option_parse.start
+runner = MailSandbox::Runner.new
+runner.option_parse
+runner.start
