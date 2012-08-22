@@ -28,11 +28,19 @@ module MailSandbox
         MailSandbox.subscribe MailSandbox::Observer::Http.new(config.http_observe_url)
       end
 
+      MailSandbox.logger.level = case config.log_level
+                                   when :info then Logger::INFO
+                                   when :error then Logger::ERROR
+                                   when :warn then Logger::WARN
+                                   when :debug then Logger::DEBUG
+                                 end
       MailSandbox::Server.parms = config.server_params
     end
 
     def start
       configure
+
+      MailSandbox.logger.info "Start MailSandbox::Server on #{config.listen}:#{config.port}"
 
       EventMachine::run {
         EventMachine::start_server config.listen, config.port, MailSandbox::Server

@@ -5,6 +5,7 @@ module MailSandbox
       @config = {
           :listen => '127.0.0.1',
           :port => 2525,
+          :log_level => :info,
           :server_params => {
             :auth => true
           }

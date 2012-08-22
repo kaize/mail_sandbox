@@ -1,5 +1,6 @@
 require "mail_sandbox/version"
 require "eventmachine"
+require 'logger'
 
 module MailSandbox
   autoload :Server, 'mail_sandbox/server'
@@ -15,6 +16,10 @@ module MailSandbox
 
   def self.unsubscribe(observer)
     Subscribe.unsubscribe observer
+  end
+
+  def self.logger
+    @logger ||= Logger.new(STDOUT)
   end
 
 end
