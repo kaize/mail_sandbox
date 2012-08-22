@@ -28,7 +28,7 @@ module MailSandbox
         MailSandbox.subscribe MailSandbox::Observer::Http.new(config.http_observe_url)
       end
 
-      MailSandbox.logger.level = case config.log_level
+      MailSandbox.logger.level = case config.log_level.to_sym
                                    when :info then Logger::INFO
                                    when :error then Logger::ERROR
                                    when :warn then Logger::WARN
