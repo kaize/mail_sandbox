@@ -26,7 +26,7 @@ MESSAGE_END
   end
 
   def teardown
-    Thread.kill @server
+    @server.terminate
     sleep 0.5
   end
 

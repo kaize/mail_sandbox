@@ -34,6 +34,7 @@ module MailSandbox
                                    when :warn then Logger::WARN
                                    when :debug then Logger::DEBUG
                                  end
+      MailSandbox::Signals.trap
       MailSandbox::Server.parms = config.server_params
     end
 
