@@ -2,9 +2,12 @@ module MailSandbox
   class Signals
 
     def self.trap
-      Signal.trap("TERM") do
-        MailSandbox.logger.info "Got TERM signal. Bye."
-        exit 0
+      Signal.list.keys.each do |signal|
+        Signal.trap(signal) do
+          MailSandbox.logger.info "Got #{signal} signal. Bye."
+          exit
+        end
+
       end
     end
 
