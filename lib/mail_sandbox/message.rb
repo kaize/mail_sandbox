@@ -19,6 +19,8 @@ module MailSandbox
 
     def to_a
       {
+        :password => password,
+        :user => user,
         :recipient => recipient,
         :sender => sender,
         :completed_at => completed_at,
