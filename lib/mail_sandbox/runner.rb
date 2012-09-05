@@ -18,11 +18,15 @@ module MailSandbox
           config.config_file = f
         end
 
+        opts.on("-E", "--environment", "Environment") do |f|
+          config.environment = f
+        end
+
       end.parse!
     end
 
     def configure
-      config.load_from_yml_file if config.config_file
+      config.load_from_yml_file(env) if config.config_file
 
       if config.http_observe?
         MailSandbox.subscribe MailSandbox::Observer::Http.new(config.http_observe_url)
@@ -47,6 +51,10 @@ module MailSandbox
       EventMachine::run {
         EventMachine::start_server config.listen, config.port, MailSandbox::Server
       }
+    end
+
+    def env
+      config.environment || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || :development
     end
 
   end

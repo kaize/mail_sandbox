@@ -1,0 +1,7 @@
+development:
+  test_key: 'development value'
+production:
+  test_key: 'production value'
+staging:
+  test_key: 'staging value'
+
