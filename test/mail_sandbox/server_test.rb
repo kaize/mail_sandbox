@@ -3,10 +3,16 @@ require 'test_helper'
 class ServerTest < MiniTest::Unit::TestCase
 
   def setup
+    EventMachine::MockHttpRequest.reset_registry!
+    EventMachine::MockHttpRequest.reset_counts!
+    EventMachine::MockHttpRequest.pass_through_requests = false
+
+    EventMachine::MockHttpRequest.activate!
 
     @server = Thread.new do
       MailSandbox::Runner.new.start
     end
+
     @server.abort_on_exception = true
     @server.run
 
@@ -20,12 +26,27 @@ class ServerTest < MiniTest::Unit::TestCase
     3 This is a test e-mail message.
 MESSAGE_END
 
+    @http_response = <<-RESPONSE.gsub(/^ +/, '')
+              HTTP/1.0 200 OK
+              Date: Mon, 16 Nov 2009 20:39:15 GMT
+              Expires: -1
+              Cache-Control: private, max-age=0
+              Content-Type: text/html; charset=ISO-8859-1
+              Via: 1.0 .:80 (squid)
+              Connection: close
+
+              Success
+            RESPONSE
+
+    @url = 'http://localhost:8080/api/mails'
 
     #wait run server
     sleep 0.5
   end
 
   def teardown
+    EventMachine::MockHttpRequest.deactivate!
+    MailSandbox::Subscribe.observers.clear
     @server.terminate
     sleep 0.5
   end
@@ -50,37 +71,6 @@ MESSAGE_END
     assert_match /^221 .*/, bye
   end
 
-  def test_concurrency_send_data
-
-    client = lambda {
-      Socket.tcp('127.0.0.1', 2525) do |socket|
-        socket.print "EHLO localhost.localdomain\r\n"
-        socket.print "MAIL FROM: my@mail.ru\r\n"
-        socket.print "RCPT TO: localhost@localdomain\r\n"
-
-        socket.print "DATA\r\n"
-
-        @message.each_line do |ln|
-          socket.print "#{ln}\r\n"
-        end
-        socket.print ".\r\n"
-
-        socket.print "QUIT\r\n"
-        socket.close_write
-        socket.close_read
-
-        exit
-      end
-    }
-
-    2.times do
-      fork &client
-    end
-
-    assert true
-
-  end
-
   def test_subscribe_mailsandox
 
     observer = MyObserver.new
@@ -96,8 +86,11 @@ MESSAGE_END
 
   end
 
-  def test_http_request
-    observer = MailSandbox::Observer::Http.new('http://localhost:8080/api/mails')
+  def test_http_observer
+
+    EventMachine::MockHttpRequest.register(@url,:post, nil, @http_response)
+
+    observer = MailSandbox::Observer::Http.new(@url)
     MailSandbox.subscribe observer
 
     Net::SMTP.start('localhost', 2525) do |smtp|
@@ -105,6 +98,9 @@ MESSAGE_END
     end
 
     sleep 1
+
+    assert_equal 1, EM::HttpRequest.count(@url, :post)
+
   end
 
   def test_auth
@@ -115,8 +111,6 @@ MESSAGE_END
     MailSandbox.subscribe observer
 
     smtp = Net::SMTP.new('localhost', 2525)
-    #smtp.set_debug_output $stdout
-
     smtp.start do |smtp|
       smtp.auth_plain(user, password)
       smtp.send_message @message, 'me@fromdomain.com', 'test@todomain.com'
