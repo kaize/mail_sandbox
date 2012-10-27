@@ -15,6 +15,12 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = MailSandbox::VERSION
 
-  gem.add_dependency(%q<eventmachine>)
-  gem.add_dependency(%q<em-http-request>)
+  gem.add_dependency('eventmachine', '~> 0.12.9')
+  gem.add_dependency('em-http-request', '~> 0.3.0')
+  gem.add_dependency('OptionParser')
+  gem.add_dependency('file-utils')
+
+  gem.add_development_dependency('rake')
+  gem.add_development_dependency('minitest')
+  gem.add_development_dependency('turn')
 end

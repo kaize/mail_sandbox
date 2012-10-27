@@ -1,9 +1,12 @@
-require "mail_sandbox"
+require 'rubygems'
+require 'bundler/setup'
+
+require 'test/unit'
+
+require 'mail_sandbox'
+require 'em-http-request'
 
 require "socket"
-require "eventmachine"
-require "em-http-request"
 require 'net/smtp'
-
 require 'my_observer'
 

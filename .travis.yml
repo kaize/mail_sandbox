@@ -1,0 +1,7 @@
+language: ruby
+script: "bundle exec turn -Itest test/mail_sandbox"
+rvm:
+  - 1.9.3
+branches:
+  only:
+    - master

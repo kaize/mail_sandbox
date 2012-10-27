@@ -1,14 +1,3 @@
-source 'https://rubygems.org'
+source :rubygems
 
-# Specify your gem's dependencies in mail_sandbox.gemspec
 gemspec
-
-gem 'eventmachine'
-gem 'em-http-request', :require => false
-gem 'json', :require => false
-
-group :test do
-  gem 'minitest'
-  gem 'turn'
-  gem 'tconsole'
-end
