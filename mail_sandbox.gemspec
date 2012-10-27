@@ -4,9 +4,9 @@ require File.expand_path('../lib/mail_sandbox/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Kaize"]
   gem.email         = [""]
-  gem.description   = %q{Mail Sandbox}
-  gem.summary       = %q{Mail Sandbox}
-  gem.homepage      = ""
+  gem.description   = %q{Gem has run SMTP server and manipulate letters received. Using the Observer pattern you can subscribe to the event server.}
+  gem.summary       = %q{SMTP server sandbox}
+  gem.homepage      = "https://github.com/kaize/mail_sandbox"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
