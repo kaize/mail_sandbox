@@ -17,6 +17,8 @@ class ServerTest < MiniTest::Unit::TestCase
   end
 
   def test_server_helo
+    wait_bind
+
     bye, helo = nil
     Socket.tcp('127.0.0.1', 2525) do |socket|
       helo = socket.readline
@@ -33,6 +35,8 @@ class ServerTest < MiniTest::Unit::TestCase
   end
 
   def test_server_auth
+    wait_bind
+
     user = 'app_user'
     password = 'KnesSGaF9TQ9wOOdXd2m'
 

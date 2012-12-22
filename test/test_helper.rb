@@ -28,11 +28,25 @@ module SpawnHelper
   end
 
   def wait_pid_file
-    5.times do
+    50.times do
       return true if File.exist?(PID_FILE)
       sleep 0.1
     end
     false
   end
+
+  def wait_bind
+    50.times do
+      begin
+        Socket.tcp('127.0.0.1', 2525)
+      rescue
+        sleep 0.1
+        next
+      end
+      return true
+    end
+    false
+  end
+
 
 end
