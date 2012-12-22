@@ -19,6 +19,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('em-http-request', '~> 0.3.0')
   gem.add_dependency('OptionParser')
   gem.add_dependency('file-utils')
+  gem.add_dependency('simple_pid')
 
   gem.add_development_dependency('rake')
   gem.add_development_dependency('minitest')

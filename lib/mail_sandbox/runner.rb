@@ -22,6 +22,14 @@ module MailSandbox
           config.environment = f
         end
 
+        opts.on("-D", "--daemonize", "Run daemonized") do |f|
+          config.daemonize = f
+        end
+
+        opts.on("-P", "--pid", "File to store PID") do |f|
+          config.pidfile = f
+        end
+
       end.parse!
     end
 
@@ -46,6 +54,9 @@ module MailSandbox
     def start
       configure
 
+      Process.daemon if config.daemonize
+      write_pidfile if config.pidfile
+
       MailSandbox.logger.info "Start MailSandbox::Server on #{config.listen}:#{config.port}"
 
       EventMachine::run {
@@ -55,6 +66,20 @@ module MailSandbox
 
     def env
       config.environment || ENV['RAILS_ENV'] || ENV['RACK_ENV'] || :development
+    end
+
+    def write_pidfile
+      SimplePid.new(config.pidfile)
+
+      if pid.exists?
+        unless pid.running?
+          pid.cleanup
+          pid.write!
+        end
+      else
+        pid.write!
+      end
+
     end
 
   end

@@ -10,6 +10,8 @@ module MailSandbox
     #   :config_file:String - path to yaml config file
     #   :http_observe?:Boolean - subscribe Observer::Http to receive new messages and push them by http protocol
     #   :http_observe_url:String - url for push on receive new messages, use by Observer::Http
+    #   :daemonize:Bool - run daemonized in the background
+    #   :pidfile:String - PATH to pid file
     #
     def initialize
       @config = {
