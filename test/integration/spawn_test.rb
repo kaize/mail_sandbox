@@ -12,8 +12,11 @@ class ServerTest < MiniTest::Unit::TestCase
   end
 
   def test_server_run
-    server_run = Process.kill 0, @pid rescue false
-    assert server_run, "Server not alive"
+    assert alive?, "Server not alive."
+  end
+
+  def test_server_bind_port
+    assert wait_bind, "Server doesn't bind."
   end
 
   def test_server_helo
