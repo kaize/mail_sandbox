@@ -3,6 +3,10 @@ require "test_helper"
 class PidfileTest < MiniTest::Unit::TestCase
   include SpawnHelper
 
+  def teardown
+    kill_server
+  end
+
   def test_pidfile
     pid = spawn_server "-P #{PID_FILE}"
     assert wait_pid_file, "Pid file doesn't exist."
