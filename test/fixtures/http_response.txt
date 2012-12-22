@@ -1,0 +1,9 @@
+HTTP/1.0 200 OK
+Date: Mon, 16 Nov 2009 20:39:15 GMT
+Expires: -1
+Cache-Control: private, max-age=0
+Content-Type: text/html; charset=ISO-8859-1
+Via: 1.0 .:80 (squid)
+Connection: close
+
+Success

@@ -13,14 +13,14 @@ class ConfigTest < MiniTest::Unit::TestCase
   end
 
   def test_load_from_yml_file
-    @config.load_from_yml_file(:development, 'test/config.yml')
+    @config.load_from_yml_file(:development, 'test/support/config.yml')
 
     assert @config.test_key
     assert_equal 'development value', @config.test_key
   end
 
   def test_load_file
-    @config.config_file = 'test/config.yml'
+    @config.config_file = 'test/support/config.yml'
 
     @config.load_from_yml_file(:production)
 

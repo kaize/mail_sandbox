@@ -1,0 +1,7 @@
+From: Private Person <me@fromdomain.com>
+To: A Test User <test@todomain.com>
+Subject: SMTP e-mail test
+
+1 This is a test e-mail message.
+2 This is a test e-mail message.
+3 This is a test e-mail message.
