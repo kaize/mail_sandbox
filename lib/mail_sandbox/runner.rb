@@ -85,7 +85,7 @@ module MailSandbox
 
     def terminate
       MailSandbox.logger.info "Got quit/terminate signal. Bye."
-      @simple_pid.cleanup
+      @simple_pid.cleanup if @simple_pid
       exit
     end
 
