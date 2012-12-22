@@ -11,20 +11,26 @@ module SpawnHelper
   PID_FILE = "/tmp/mail_sandbox.#{rand*1000.to_i}.pid"
 
   def spawn_server(options = "")
-    @pid = spawn "bundle exec mail_sandbox #{options}"
+    @pid = spawn command(options)
     sleep 0.1 until alive?
     Process.detach @pid
     sleep 1
     @pid
   end
 
-  def kill_server
-    Process.kill "QUIT", @pid
-    sleep 0.1 while alive?
+  def command(options)
+    "bundle exec mail_sandbox #{options}"
   end
 
-  def alive?
-    Process.kill 0, @pid rescue false
+  def kill_server(pid = nil)
+    pid ||= @pid
+    Process.kill "QUIT", pid rescue false
+    sleep 0.1 while alive?(pid)
+  end
+
+  def alive?(pid = nil)
+    pid ||= @pid
+    Process.kill 0, pid rescue false
   end
 
   def wait_pid_file
