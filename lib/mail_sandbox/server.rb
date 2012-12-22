@@ -20,7 +20,7 @@ module MailSandbox
 
     def receive_message
       message.completed_at = Time.now
-      Subscribe.notify(message)
+      MailSandbox.subscriber.notify(message)
       true
     end
 
