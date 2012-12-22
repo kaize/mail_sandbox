@@ -1,14 +1,14 @@
 module MailSandbox
   class Signals
 
-    def self.trap
+    def self.trap(server)
+
       %w'TERM QUIT'.each do |signal|
         Signal.trap(signal) do
-          MailSandbox.logger.info "Got #{signal} signal. Bye."
-          exit
+          server.terminate
         end
-
       end
+
     end
 
   end

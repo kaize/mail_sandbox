@@ -1,5 +1,6 @@
 require "eventmachine"
 require 'optparse'
+require 'simple_pid'
 require 'fileutils'
 
 module MailSandbox
@@ -26,8 +27,8 @@ module MailSandbox
           config.daemonize = f
         end
 
-        opts.on("-P", "--pid", "File to store PID") do |f|
-          config.pidfile = f
+        opts.on("-P", "--pid FILE", "File to store PID") do |f|
+          config.pidfile = ::File.expand_path(f)
         end
 
       end.parse!
@@ -47,7 +48,7 @@ module MailSandbox
                                    when :debug then Logger::DEBUG
                                  end
       STDOUT.sync = true
-      MailSandbox::Signals.trap
+      MailSandbox::Signals.trap(self)
       MailSandbox::Server.parms = config.server_params
     end
 
@@ -69,17 +70,23 @@ module MailSandbox
     end
 
     def write_pidfile
-      SimplePid.new(config.pidfile)
+      @simple_pid = SimplePid.new(config.pidfile)
 
-      if pid.exists?
-        unless pid.running?
-          pid.cleanup
-          pid.write!
+      if @simple_pid.exists?
+        unless @simple_pid.running?
+          @simple_pid.cleanup
+          @simple_pid.write!
         end
       else
-        pid.write!
+        @simple_pid.write!
       end
 
+    end
+
+    def terminate
+      MailSandbox.logger.info "Got quit/terminate signal. Bye."
+      @simple_pid.cleanup
+      exit
     end
 
   end
