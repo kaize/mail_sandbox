@@ -1,6 +1,7 @@
 require "mail_sandbox/version"
 require "eventmachine"
 require 'logger'
+require 'yaml'
 
 module MailSandbox
   autoload :Server, 'mail_sandbox/server'
