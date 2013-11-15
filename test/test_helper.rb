@@ -1,6 +1,7 @@
 require "bundler/setup"
 Bundler.require(:default, :test)
 
+require 'minitest/autorun'
 require 'em-http-request'
 require "socket"
 require 'support/my_observer'
