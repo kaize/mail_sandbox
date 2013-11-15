@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('simple_pid')
 
   gem.add_development_dependency('rake')
-  gem.add_development_dependency('minitest')
+  gem.add_development_dependency('minitest', '4.7.5')
   gem.add_development_dependency('turn')
   gem.add_development_dependency('mocha', '>= 0.13.1')
 end
