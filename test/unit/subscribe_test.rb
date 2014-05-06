@@ -23,7 +23,7 @@ class SubscribeTest < MiniTest::Unit::TestCase
 
   def test_http_observer
     url = "http://localhost/api"
-    body = {:body => {:message => @message.to_a}}
+    body = {:body => {:message => @message.to_hash}}
 
     http_mock = mock()
     http_mock.stubs(:callback)

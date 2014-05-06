@@ -9,7 +9,7 @@ module MailSandbox
     end
 
     def update(message)
-      body = {:message => message.to_a}
+      body = {:message => message.to_hash}
 
       MailSandbox.logger.debug "Observer::Http send to #{@url} method #{@method} body #{body.to_s}"
 
