@@ -14,7 +14,7 @@ module MailSandbox
     end
 
     def receive_recipient(recipient)
-      message.recipient = recipient
+      message.recipients << recipient
       true
     end
 
