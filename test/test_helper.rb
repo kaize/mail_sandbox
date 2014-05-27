@@ -5,7 +5,9 @@ require 'em-http-request'
 require "socket"
 require 'support/my_observer'
 require 'net/smtp'
-require 'mocha'
+
+require "minitest/unit"
+require "mocha/mini_test"
 
 module SpawnHelper
   PID_FILE = "/tmp/mail_sandbox.#{rand*1000.to_i}.pid"

@@ -53,8 +53,4 @@ class ServerTest < MiniTest::Unit::TestCase
 
     assert alive?
   end
-
-
-
-
 end
